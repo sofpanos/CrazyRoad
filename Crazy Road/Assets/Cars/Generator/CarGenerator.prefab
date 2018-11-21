@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1095441059580596}
+  m_IsPrefabAsset: 1
+--- !u!1 &1095441059580596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4630624033129190}
+  - component: {fileID: 114904002829346806}
+  m_Layer: 0
+  m_Name: CarGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &4630624033129190
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095441059580596}
+  m_LocalRotation: {x: 0, y: -0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -11.36, y: -1.6, z: -0.023106733}
+  m_LocalScale: {x: 0.50000024, y: 0.50000024, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114904002829346806
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095441059580596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aacd69337d29acc4d90b003202146d36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CarList:
+  - {fileID: 1257018377367488, guid: 1775ead67a52706459beefd46a602198, type: 2}
+  - {fileID: 1867004990237782, guid: 99ee91ca4c1723e488d551e58c7fb925, type: 2}
+  - {fileID: 1451434005137674, guid: 1c58ac9824c5b2a4ba4ace0b77159f84, type: 2}
+  - {fileID: 1148708349483048, guid: c70a1b7d13c14b8449ba6fa4e48c6ed0, type: 2}
+  - {fileID: 1480327461945316, guid: e330c76c2b27c9c438daacfb1bf0ae00, type: 2}
+  - {fileID: 1333241390698142, guid: 503eef7ed0a122d4dac5edcb8d5eca52, type: 2}
+  - {fileID: 1221115284760920, guid: ec770923a08909f4f863c5e24dbd31e5, type: 2}
+  - {fileID: 1989161121402830, guid: ba1e6f1afc7bb5646b4555c2d46ef5bf, type: 2}
+  - {fileID: 1527803558274454, guid: 55acb24b44d636041acfc57294b14e66, type: 2}
+  Speed: 7
