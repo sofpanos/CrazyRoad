@@ -13,14 +13,17 @@ public class CarGeneratorScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (start)
+		if (!UIScript.GameOver && !UIScript.Won)
 		{
-			GenerateCar();
-			start = false;
-		}
-		else if (DateTime.Now - LastGenerationTime > CarInterval)
-		{
-			GenerateCar();
+			if (start)
+			{
+				GenerateCar();
+				start = false;
+			}
+			else if (DateTime.Now - LastGenerationTime > CarInterval)
+			{
+				GenerateCar();
+			}
 		}
 	}
 

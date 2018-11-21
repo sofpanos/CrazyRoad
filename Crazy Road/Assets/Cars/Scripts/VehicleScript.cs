@@ -37,16 +37,16 @@ public class VehicleScript : MonoBehaviour {
 
 	private void Update()
 	{
-		if (transform.rotation.eulerAngles.z > 0)
+		if (transform.rotation.eulerAngles.z < 180)
 		{
-			if(transform.position.x < -14)
+			if(transform.position.x < -14f)
 			{
 				Destroy(transform.gameObject);
 			}
 		}
 		else
 		{
-			if(transform.position.x > 14)
+			if(transform.position.x > 14f)
 			{
 				Destroy(transform.gameObject);
 			}
@@ -60,6 +60,23 @@ public class VehicleScript : MonoBehaviour {
 
 	private void FixedUpdate()
 	{
+		if (UIScript.GameOver || UIScript.Won)
+		{
+			AudioSource siren = null;
+			try
+			{
+				siren = GetComponent<AudioSource>();
+			}
+			catch (MissingComponentException e)
+			{
+
+			}
+			if (siren != null)
+			{
+				siren.Stop();
+			}
+		}
+
 		HandleVehicleInFront();
 	}
 
@@ -90,4 +107,5 @@ public class VehicleScript : MonoBehaviour {
 			}
 		}
 	}
+
 }
