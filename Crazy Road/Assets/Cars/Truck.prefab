@@ -42,7 +42,7 @@ GameObject:
   m_Layer: 9
   m_Name: VehicleCheck
   m_TagString: Untagged
-  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1527803558274454}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 4.301115, y: -2.2473466, z: -0.016329255}
+  m_LocalPosition: {x: 5.261956, y: -1.7390337, z: -0.016329255}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children:
   - {fileID: 4460031357201078}
@@ -90,8 +90,8 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 6
 --- !u!61 &61836270384576384
 BoxCollider2D:
@@ -130,8 +130,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.079, y: 0.86}
-  m_Size: {x: 0.74, y: 0.53}
+  m_Offset: {x: -0.079, y: 0.89}
+  m_Size: {x: 0.74, y: 0.62}
   m_Direction: 1
 --- !u!114 &114300427520679050
 MonoBehaviour:
@@ -148,6 +148,7 @@ MonoBehaviour:
   VehicleMask:
     serializedVersion: 2
     m_Bits: 512
+  Flipped: 0
   VehicleCheckRadius: 0.1
   breakingForceStep: 0.05
 --- !u!212 &212604324261472538
@@ -182,8 +183,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1037199221
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2afe0be7c7f76234aaed581821e06e1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

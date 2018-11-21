@@ -7,16 +7,18 @@ public class CarGeneratorScript : MonoBehaviour {
 	public List<GameObject> CarList = new List<GameObject>();
 	private TimeSpan CarInterval = new TimeSpan(0, 0, 2);
 	private DateTime LastGenerationTime;
+	private bool start = true;
 	public static float MaxSpeed = 9;
 	public static float MinSpeed = 5;
-	// Use this for initialization
-	void Start () {
-		GenerateCar();
-	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(DateTime.Now - LastGenerationTime > CarInterval)
+		if (start)
+		{
+			GenerateCar();
+			start = false;
+		}
+		else if (DateTime.Now - LastGenerationTime > CarInterval)
 		{
 			GenerateCar();
 		}
@@ -30,6 +32,7 @@ public class CarGeneratorScript : MonoBehaviour {
 		{
 			if(UnityEngine.Random.value < 0.5f)
 			{
+				car.GetComponent<AudioSource>().Play();
 				car.GetComponent<Animator>().SetBool("siren", true);
 			}
 		}
@@ -37,8 +40,8 @@ public class CarGeneratorScript : MonoBehaviour {
 		if (transform.position.x > 0)
 		{
 			car.transform.position = transform.position;
-			car.GetComponent<SpriteRenderer>().flipY = true;
-			car.GetComponent<VehicleScript>().VehicleInFrontCheck.localPosition = new Vector3(0, -6);
+			car.transform.Rotate(Vector3.forward, 180f);
+			//car.GetComponent<VehicleScript>().VehicleInFrontCheck.localPosition = new Vector3(0, -6);
 			car.GetComponent<Rigidbody2D>().velocity = new Vector2(-StartSpeed, 0);
 			LastGenerationTime = DateTime.Now;
 		}

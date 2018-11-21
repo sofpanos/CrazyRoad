@@ -6,12 +6,14 @@ public class VehicleScript : MonoBehaviour {
 
 	public Transform VehicleInFrontCheck;
 	public LayerMask VehicleMask;
+	public bool Flipped = false;
 	public float VehicleCheckRadius = 0.2f;
 	public float breakingForceStep = 0.2f;
+	private GameObject Player;
 	
 	private float startingSpeed = 0;
 	
-	private float breakingForce = 0;
+	
 
 	private float accelarationStep = 0.3f;
 	private bool isThereVehicle = false;
@@ -20,21 +22,22 @@ public class VehicleScript : MonoBehaviour {
 	private void Start()
 	{
 		body = GetComponent<Rigidbody2D>();
+		Player = GameObject.Find("Player");
 	}
 
-	private void OnTriggerEnter(Collider other)
+	
+	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
+		if(other.gameObject.layer == Player.layer)
 		{
-			float dummy = 2f;
-			//GameObject canvas = GameObject.Find("Canvas");
-			//canvas.GetComponent<UIScript>().GameOver();
+			Player.GetComponent<AudioSource>().Play();
+			UIScript.GameOver = true;
 		}
 	}
 
 	private void Update()
 	{
-		if (GetComponent<SpriteRenderer>().flipY)
+		if (transform.rotation.eulerAngles.z > 0)
 		{
 			if(transform.position.x < -14)
 			{
@@ -77,7 +80,6 @@ public class VehicleScript : MonoBehaviour {
 		}
 		else if(Mathf.Abs(startingSpeed) > Mathf.Abs(body.velocity.x))
 		{
-			breakingForce = 0;
 			if(startingSpeed < 0)
 			{
 				body.velocity = new Vector2(-(Mathf.Abs(body.velocity.x) + accelarationStep), 0);
@@ -86,10 +88,6 @@ public class VehicleScript : MonoBehaviour {
 			{
 				body.velocity = new Vector2(body.velocity.x + accelarationStep, 0);
 			}
-		}
-		else
-		{
-			breakingForce = 0;
 		}
 	}
 }
