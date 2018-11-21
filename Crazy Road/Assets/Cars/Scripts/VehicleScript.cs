@@ -7,8 +7,8 @@ public class VehicleScript : MonoBehaviour {
 	public Transform VehicleInFrontCheck;
 	public LayerMask VehicleMask;
 	public bool Flipped = false;
-	public float VehicleCheckRadius = 0.2f;
-	public float breakingForceStep = 0.2f;
+	public float VehicleCheckRadius = 0.4f;
+	public float breakingForceStep = 0.45f;
 	private GameObject Player;
 	
 	private float startingSpeed = 0;
@@ -37,7 +37,7 @@ public class VehicleScript : MonoBehaviour {
 
 	private void Update()
 	{
-		if (transform.rotation.eulerAngles.z < 180)
+		if (Flipped)
 		{
 			if(transform.position.x < -14f)
 			{

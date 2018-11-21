@@ -16,6 +16,10 @@ public class CharacterScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(UIScript.GameOver || UIScript.Won)
+		{
+			mainCam.GetComponent<AudioSource>().Stop();
+		}
 		mainCam.transform.position = new Vector3(transform.position.x, transform.position.y, mainCam.transform.position.z);
 	}
 

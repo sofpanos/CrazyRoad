@@ -5,7 +5,7 @@ using System;
 
 public class CarGeneratorScript : MonoBehaviour {
 	public List<GameObject> CarList = new List<GameObject>();
-	private TimeSpan CarInterval = new TimeSpan(0, 0, 2);
+	private TimeSpan CarInterval = new TimeSpan(0, 0, 0, 1, 500);
 	private DateTime LastGenerationTime;
 	private bool start = true;
 	public static float MaxSpeed = 9;
@@ -33,7 +33,7 @@ public class CarGeneratorScript : MonoBehaviour {
 		GameObject car = Instantiate(CarList[carIndex]);
 		if(carIndex == 0 || carIndex == 1)
 		{
-			if(UnityEngine.Random.value < 0.5f)
+			if(UnityEngine.Random.value < 0.15f)
 			{
 				car.GetComponent<AudioSource>().Play();
 				car.GetComponent<Animator>().SetBool("siren", true);
@@ -43,6 +43,7 @@ public class CarGeneratorScript : MonoBehaviour {
 		if (transform.position.x > 0)
 		{
 			car.transform.position = transform.position;
+			car.GetComponent<VehicleScript>().Flipped = true;
 			car.transform.Rotate(Vector3.forward, 180f);
 			//car.GetComponent<VehicleScript>().VehicleInFrontCheck.localPosition = new Vector3(0, -6);
 			car.GetComponent<Rigidbody2D>().velocity = new Vector2(-StartSpeed, 0);
