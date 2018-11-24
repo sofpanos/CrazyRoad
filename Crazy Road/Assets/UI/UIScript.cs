@@ -12,9 +12,9 @@ public class UIScript : MonoBehaviour {
 
 	private static bool PlayAgain = false;
 	public static Difficulty LastDificulty;
-	private static Mode LastMode;
+	public static Mode LastMode;
 
-	private enum Mode
+	public enum Mode
 	{
 		Normal,
 		Survival
