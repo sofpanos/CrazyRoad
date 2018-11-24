@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114968191600449178}
   m_Layer: 9
   m_Name: BlackViper
-  m_TagString: Untagged
+  m_TagString: BlackViper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

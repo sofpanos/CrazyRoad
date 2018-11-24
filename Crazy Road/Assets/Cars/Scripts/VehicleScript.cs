@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class VehicleScript : MonoBehaviour {
-
+	
 	public Transform VehicleInFrontCheck;
 	public LayerMask VehicleMask;
 	public bool Flipped = false;
@@ -23,6 +23,7 @@ public class VehicleScript : MonoBehaviour {
 	{
 		body = GetComponent<Rigidbody2D>();
 		Player = GameObject.Find("Player");
+		
 	}
 
 	
@@ -60,7 +61,7 @@ public class VehicleScript : MonoBehaviour {
 
 	private void FixedUpdate()
 	{
-		if (UIScript.GameOver || UIScript.Won)
+		if (UIScript.GameOver || UIScript.Won || UIScript.Paused || UIScript.Entry)
 		{
 			AudioSource siren = null;
 			try
@@ -82,7 +83,17 @@ public class VehicleScript : MonoBehaviour {
 
 	private void HandleVehicleInFront()
 	{
-		isThereVehicle = Physics2D.OverlapCircle(VehicleInFrontCheck.position, VehicleCheckRadius, VehicleMask);
+		if (Flipped)
+		{
+			isThereVehicle = Physics2D.OverlapArea(new Vector2(VehicleInFrontCheck.transform.position.x + 1f, VehicleInFrontCheck.position.y + .1f),
+			new Vector2(VehicleInFrontCheck.position.x - 1f, VehicleInFrontCheck.position.y - 0.1f), VehicleMask);
+		}
+		else
+		{
+			isThereVehicle = Physics2D.OverlapArea(new Vector2(VehicleInFrontCheck.position.x - 1f, VehicleInFrontCheck.position.y - .1f),
+			new Vector2(VehicleInFrontCheck.position.x + 1f, VehicleInFrontCheck.position.y + 0.1f), VehicleMask);
+
+		}
 		if (isThereVehicle)
 		{
 			if(startingSpeed < 0)

@@ -7,18 +7,24 @@ public class CharacterScript : MonoBehaviour {
 	private Rigidbody2D body;
 	private Animator anim;
 	public Camera mainCam;
+	private AudioSource enviroment;
 	
 	// Use this for initialization
 	void Start () {
 		body = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
+		enviroment = mainCam.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(UIScript.GameOver || UIScript.Won)
+		if(UIScript.GameOver || UIScript.Won || UIScript.Entry || UIScript.Paused)
 		{
-			mainCam.GetComponent<AudioSource>().Stop();
+			enviroment.Stop();
+		}
+		else if (!mainCam.GetComponent<AudioSource>().isPlaying)
+		{
+			enviroment.Play();
 		}
 		mainCam.transform.position = new Vector3(transform.position.x, transform.position.y, mainCam.transform.position.z);
 	}
