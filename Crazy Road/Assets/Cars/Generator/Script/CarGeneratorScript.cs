@@ -48,6 +48,11 @@ public class CarGeneratorScript : MonoBehaviour {
 		
 		int carIndex = UnityEngine.Random.Range(0, CarList.Count);
 		GameObject car = Instantiate(CarList[carIndex]);
+		if((carIndex == 0 || carIndex == 1) && (new System.Random()).NextDouble() < 0.15f)
+		{
+			car.GetComponent<AudioSource>().Play();
+			car.GetComponent<Animator>().SetBool("siren", true);
+		}
 		if (transform.position.x > 0)
 		{
 			car.transform.position = transform.position;
