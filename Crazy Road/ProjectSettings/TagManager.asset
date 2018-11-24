@@ -13,6 +13,9 @@ TagManager:
   - PoliceCar
   - Taxi
   - Truck
+  - Filler
+  - Start
+  - Road
   layers:
   - Default
   - TransparentFX

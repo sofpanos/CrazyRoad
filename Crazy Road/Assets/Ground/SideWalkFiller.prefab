@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4388667843383318}
   m_Layer: 0
   m_Name: SideWalkFiller
-  m_TagString: Untagged
+  m_TagString: Filler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

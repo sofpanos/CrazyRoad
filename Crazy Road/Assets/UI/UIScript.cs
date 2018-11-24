@@ -11,7 +11,7 @@ public class UIScript : MonoBehaviour {
 	public static bool Paused = false;
 
 	private static bool PlayAgain = false;
-	private static Difficulty LastDificulty;
+	public static Difficulty LastDificulty;
 	private static Mode LastMode;
 
 	private enum Mode
@@ -20,12 +20,19 @@ public class UIScript : MonoBehaviour {
 		Survival
 	}
 
-	private enum Difficulty
+	public enum Difficulty
 	{
 		Easy,
 		Medium,
 		Hard
 	}
+
+	//UI
+	public GameObject Score;
+
+	//GameWorlds
+	public GameObject Normal;
+	public GameObject Survival;
 
 	//Panels
 	public GameObject EntryPanel;
@@ -43,27 +50,23 @@ public class UIScript : MonoBehaviour {
 		Time.timeScale = 0f;
 		if (PlayAgain)
 		{
-			switch (LastMode)
+			if(LastMode == Mode.Survival)
 			{
-				case Mode.Normal:
-					switch (LastDificulty)
-					{
-						case Difficulty.Easy:
-							OnEasy();
-							PlayAgain = false;
-							break;
-						case Difficulty.Medium:
-							OnMedium();
-							PlayAgain = false;
-							break;
-						case Difficulty.Hard:
-							OnHard();
-							PlayAgain = false;
-							break;
-					}
+				Normal.SetActive(false);
+				Survival.SetActive(true);
+			}
+			switch (LastDificulty)
+			{
+				case Difficulty.Easy:
+					OnEasy();
+					PlayAgain = false;
 					break;
-				case Mode.Survival:
-					OnSurvivalMode();
+				case Difficulty.Medium:
+					OnMedium();
+					PlayAgain = false;
+					break;
+				case Difficulty.Hard:
+					OnHard();
 					PlayAgain = false;
 					break;
 			}
@@ -91,14 +94,7 @@ public class UIScript : MonoBehaviour {
 		Entry = true;
 		Paused = GameOver = Won = false;
 		EntryPanel.SetActive(true);
-		if (GameOverPanel.activeSelf)
-		{
-			GameOverPanel.SetActive(false);
-		}
-		else if (WinPanel.activeSelf)
-		{
-			WinPanel.SetActive(false);
-		}
+		SceneManager.LoadScene(0);
 	}
 
 	public void OnPlayAgain()
@@ -134,10 +130,20 @@ public class UIScript : MonoBehaviour {
 	public void OnNormalMode()
 	{
 		LastMode = Mode.Normal;
+		Normal.SetActive(true);
+		Survival.SetActive(false);
 		EntryPanel.SetActive(false);
 		DifficultyPanel.SetActive(true);
 	}
 
+	public void OnSurvivalMode()
+	{
+		LastMode = Mode.Survival;
+		Normal.SetActive(false);
+		Survival.SetActive(true);
+		EntryPanel.SetActive(false);
+		DifficultyPanel.SetActive(true);
+	}
 	public void OnHelp()
 	{
 		HelpPanel.SetActive(true);
@@ -162,10 +168,17 @@ public class UIScript : MonoBehaviour {
 	///// Difficulty Panel Actions //////
 	public void OnEasy()
 	{
+		
 		Time.timeScale = 1f;
 		CarGeneratorScript.CarInterval = new System.TimeSpan(0, 0, 0, 3);
 		LastDificulty = Difficulty.Easy;
 		Entry = false;
+		if (LastMode == Mode.Survival)
+		{
+			Score.SetActive(true);
+			Score.GetComponent<ScoreScript>().resetScore();
+		}
+
 		if (PlayAgain)
 		{
 			EntryPanel.SetActive(false);
@@ -181,6 +194,11 @@ public class UIScript : MonoBehaviour {
 		Time.timeScale = 1f;
 		CarGeneratorScript.CarInterval = new System.TimeSpan(0, 0, 0, 2, 200);
 		LastDificulty = Difficulty.Medium;
+		if (LastMode == Mode.Survival)
+		{
+			Score.SetActive(true);
+			Score.GetComponent<ScoreScript>().resetScore();
+		}
 		Entry = false;
 		if (PlayAgain)
 		{
@@ -197,6 +215,12 @@ public class UIScript : MonoBehaviour {
 		Time.timeScale = 1f;
 		CarGeneratorScript.CarInterval = new System.TimeSpan(0, 0, 0, 1, 500);
 		LastDificulty = Difficulty.Hard;
+		if (LastMode == Mode.Survival)
+		{
+			Score.SetActive(true);
+			Score.GetComponent<ScoreScript>().resetScore();
+		}
+
 		Entry = false;
 		if (PlayAgain)
 		{
@@ -206,11 +230,6 @@ public class UIScript : MonoBehaviour {
 		{
 			DifficultyPanel.GetComponent<Animator>().SetBool("close", true);
 		}
-	}
-
-	public void OnSurvivalMode()
-	{
-		LastMode = Mode.Survival;
 	}
 
 }
