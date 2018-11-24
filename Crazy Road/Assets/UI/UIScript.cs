@@ -84,6 +84,23 @@ public class UIScript : MonoBehaviour {
 		
 	}
 
+	//Win - Game Over Panel Actions
+
+	public void OnMenu()
+	{
+		Entry = true;
+		Paused = GameOver = Won = false;
+		EntryPanel.SetActive(true);
+		if (GameOverPanel.activeSelf)
+		{
+			GameOverPanel.SetActive(false);
+		}
+		else if (WinPanel.activeSelf)
+		{
+			WinPanel.SetActive(false);
+		}
+	}
+
 	public void OnPlayAgain()
 	{
 		Time.timeScale = 1f;
@@ -149,7 +166,14 @@ public class UIScript : MonoBehaviour {
 		CarGeneratorScript.CarInterval = new System.TimeSpan(0, 0, 0, 3);
 		LastDificulty = Difficulty.Easy;
 		Entry = false;
-		DifficultyPanel.GetComponent<Animator>().SetBool("close", true);
+		if (PlayAgain)
+		{
+			EntryPanel.SetActive(false);
+		}
+		else
+		{
+			DifficultyPanel.GetComponent<Animator>().SetBool("close", true);
+		}
 	}
 
 	public void OnMedium()
@@ -158,7 +182,14 @@ public class UIScript : MonoBehaviour {
 		CarGeneratorScript.CarInterval = new System.TimeSpan(0, 0, 0, 2, 200);
 		LastDificulty = Difficulty.Medium;
 		Entry = false;
-		DifficultyPanel.GetComponent<Animator>().SetBool("close", true);
+		if (PlayAgain)
+		{
+			EntryPanel.SetActive(false);
+		}
+		else
+		{
+			DifficultyPanel.GetComponent<Animator>().SetBool("close", true);
+		}
 	}
 
 	public void OnHard()
