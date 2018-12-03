@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class VehicleScript : MonoBehaviour {
-	
+	private const float WorldLimit = 14f;
 	public Transform VehicleInFrontCheck;
 	public LayerMask VehicleMask;
 	public bool Flipped = false;
@@ -40,14 +40,14 @@ public class VehicleScript : MonoBehaviour {
 	{
 		if (Flipped)
 		{
-			if(transform.position.x < -14f)
+			if(transform.position.x < -WorldLimit)
 			{
 				Destroy(transform.gameObject);
 			}
 		}
 		else
 		{
-			if(transform.position.x > 14f)
+			if(transform.position.x > WorldLimit)
 			{
 				Destroy(transform.gameObject);
 			}
