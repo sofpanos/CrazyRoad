@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UIScript : MonoBehaviour {
@@ -14,6 +12,7 @@ public class UIScript : MonoBehaviour {
 	public static Difficulty LastDificulty;
 	public static Mode LastMode;
 
+	
 	public enum Mode
 	{
 		Normal,
@@ -41,6 +40,7 @@ public class UIScript : MonoBehaviour {
 	public GameObject CreditsPanel;
 	public GameObject GameOverPanel;
 	public GameObject WinPanel;
+	public GameObject SubmitPanel;
 	
 	// Use this for initialization
 	void Start () {
@@ -125,6 +125,12 @@ public class UIScript : MonoBehaviour {
 		EntryPanel.SetActive(true);
 	}
 
+	public void OnSubmit()
+	{
+		GameOverPanel.SetActive(false);
+		SubmitPanel.SetActive(true);
+	}
+
 	
 	//Entry Panel Actions///
 	public void OnNormalMode()
@@ -144,6 +150,7 @@ public class UIScript : MonoBehaviour {
 		EntryPanel.SetActive(false);
 		DifficultyPanel.SetActive(true);
 	}
+
 	public void OnHelp()
 	{
 		HelpPanel.SetActive(true);
@@ -232,4 +239,5 @@ public class UIScript : MonoBehaviour {
 		}
 	}
 
+	
 }
