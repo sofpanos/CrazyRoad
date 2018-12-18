@@ -11,6 +11,7 @@ public class ScoreScript : MonoBehaviour {
 	private float StartPosition;
 	private float PositionScore;
 	private float multiplier = 1;
+	private static float maxspeed = 0;
 	
 	// Use this for initialization
 	void Start () {
@@ -43,6 +44,10 @@ public class ScoreScript : MonoBehaviour {
 			TimeSpan time = DateTime.Now - StartTime;
 			FinalScore =(int)PositionScore + (int)(time.TotalSeconds/5);
 		}
+
+		TimeSpan time2 = DateTime.Now - StartTime;
+		float distance = Player.transform.position.y - StartPosition;
+		maxspeed = Math.Max(distance / (float)time2.TotalSeconds, maxspeed);
 		PositionScore = (Player.transform.position.y - StartPosition) * multiplier;
 		GetComponent<Text>().text = "Score: " + (int)PositionScore;
 	}

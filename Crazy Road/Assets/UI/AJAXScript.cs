@@ -67,9 +67,17 @@ public class AJAXScript : MonoBehaviour {
 			SubmitText.GetComponent<Text>().text = responseText;
 			
 		}
-		else
+		else if(responseText.StartsWith("SQL Error"))
 		{
 			SubmitText.GetComponent<Text>().text = responseText;
+		}
+		else if(responseText.Equals("Authentication Failed"))
+		{
+			SubmitText.GetComponent<Text>().text = "Wrong Password or Username";
+		}
+		else
+		{
+			SubmitText.GetComponent<Text>().text = "Something Went Wrong Please Contact support";
 		}
 		OnScoreBoard();
 		DateTime start = DateTime.Now;
@@ -109,7 +117,6 @@ public class AJAXScript : MonoBehaviour {
 		text = text.Replace(",", "},{");
 		Dictionary<string, int> scores = JSONParser(text);
 		
-		int childIndex = 0;
 		IEnumerator children = NamesAndScores.transform.GetEnumerator();
 		foreach(KeyValuePair<String, int> pair in scores)
 		{
