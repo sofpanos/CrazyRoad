@@ -23,7 +23,7 @@ public class PanelScript : MonoBehaviour {
 		}
 		else
 		{
-			transform.GetChild(2).gameObject.SetActive(false);
+			transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
 			transform.GetChild(1).GetComponent<Text>().text = "";
 		}
 	}

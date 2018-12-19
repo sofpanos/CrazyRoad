@@ -7,21 +7,17 @@ using System;
 public class ScoreScript : MonoBehaviour {
 	public GameObject Player;
 	public static int FinalScore;
-	private DateTime StartTime;
 	private float StartPosition;
 	private float PositionScore;
 	private float multiplier = 1;
-	private static float maxspeed = 0;
 	
 	// Use this for initialization
 	void Start () {
-		StartTime = DateTime.Now;
 		StartPosition = Player.transform.position.y;
 	}
 
 	public void resetScore()
 	{
-		StartTime = DateTime.Now;
 		StartPosition = Player.transform.position.y;
 		switch (UIScript.LastDificulty)
 		{
@@ -41,13 +37,9 @@ public class ScoreScript : MonoBehaviour {
 	void Update () {
 		if (UIScript.GameOver)
 		{
-			TimeSpan time = DateTime.Now - StartTime;
-			FinalScore =(int)PositionScore + (int)(time.TotalSeconds/5);
+			FinalScore =(int)PositionScore;
 		}
 
-		TimeSpan time2 = DateTime.Now - StartTime;
-		float distance = Player.transform.position.y - StartPosition;
-		maxspeed = Math.Max(distance / (float)time2.TotalSeconds, maxspeed);
 		PositionScore = (Player.transform.position.y - StartPosition) * multiplier;
 		GetComponent<Text>().text = "Score: " + (int)PositionScore;
 	}
