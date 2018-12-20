@@ -5,48 +5,54 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Serialization;
 using System;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Globalization;
 
-public class AJAXScript : MonoBehaviour {
+public class ScoresPanelScript : MonoBehaviour
+{
 
 	private const string ScoreboardURL = "https://users.it.teithe.gr/~it144287/CrazyRoad/Score.php";
 
-	//Submit Fields
+	//Submit Panel Objects
 	public GameObject SubmitPanel;
 	public GameObject HighscoresPanel;
-	public Text SubmitText;
-	public GameObject UsernameInput;
-	public GameObject PINInput;
-	public GameObject NamesAndScores;
 	public GameObject GameOverPanel;
 	public GameObject PinPanel;
 	public GameObject UsernamePanel;
+	//Submit Text Objects
+	public Text SubmitText;
+	//Submit Input Objects
+	public GameObject UsernameInput;
+	public GameObject PINInput;
+	//Highscores Table Object
+	public GameObject NamesAndScores;
+	//Submit Button
 	public GameObject SubmitButton;
-	public GameObject ChangeUserButton;
 
-	private static bool LoggedIn = false;
-	private static string username = "";
-	private static int pin = 0;
-	private bool submitted = false;
-	private DateTime SubmitTime = DateTime.MinValue;
+	private bool LoggedIn = false;
+	private string username = "";
+	private int pin = 0;
 
 	private const string LoginMessage = "Login/Sign up to Submit your score";
-	private const string LoggedinMessage = "Click Submit to submit your score or Change User to switch to another user";
+	private const string LoggedinMessage = "Your Score is being submitted please wait";
 
 
-	void OnEnable()
+	// Use this for initialization
+	void Start()
 	{
-		UpdateSubmitUI();
+
 	}
 
+	// Update is called once per frame
+	void Update()
+	{
+
+	}
+
+	
 	public void OnSubmitClicked()
 	{
-		StartCoroutine(SubmitRequest());
+		StartCoroutine(OnSubmit());
 	}
-
-	private IEnumerator SubmitRequest()
+	public IEnumerator OnSubmit()
 	{
 		WWWForm httpForm = new WWWForm();
 		if (!LoggedIn)
@@ -75,33 +81,12 @@ public class AJAXScript : MonoBehaviour {
 
 	}
 
-	private void Update()
-	{
-		if (submitted)
-		{
-			if(SubmitTime == DateTime.MinValue)
-			{
-				SubmitTime = DateTime.Now;
-			}
-			else if(DateTime.Now - SubmitTime > new TimeSpan(0, 0, 5))
-			{
-				OnScoreBoard();
-				SubmitPanel.SetActive(false);
-				HighscoresPanel.SetActive(true);
-				//reset values
-				submitted = false;
-				SubmitTime = DateTime.MinValue;
-			}
-
-		}
-	}
 	private void HandleSubmitResponseText(string responseText)
 	{
-		if (responseText == "Score Submitted" || responseText.StartsWith("Your Highscore"))
+		if (responseText == "Score Submitted")
 		{
 			SubmitText.text = responseText;
 			LoggedIn = true;
-			submitted = true;
 		}
 		else if (responseText.StartsWith("SQL Error"))
 		{
@@ -109,16 +94,21 @@ public class AJAXScript : MonoBehaviour {
 			username = "";
 			pin = 0;
 		}
-		else if (responseText.Equals("Authorization Failed"))
+		else if (responseText.Equals("Authentication Failed"))
 		{
-			SubmitText.text = "Wrong Password or Username, try again(Login). Or username already in use(SignUp).";
+			SubmitText.text = "Wrong Password or Username";
 		}
 		else
 		{
 			SubmitText.text = "Something Went Wrong Please Contact support";
-			SubmitText.text = responseText;
 		}
-		
+		OnScoreBoard();
+		DateTime start = DateTime.Now;
+		while (DateTime.Now - start < new TimeSpan(0, 0, 5))
+		{
+
+		}
+
 	}
 
 	public void OnScoreBoard()
@@ -131,8 +121,8 @@ public class AJAXScript : MonoBehaviour {
 		WWWForm httpForm = new WWWForm();
 
 		httpForm.AddField("requestType", "scoreboard");
-		httpForm.AddField("username", username);
-		httpForm.AddField("pin", pin);
+		httpForm.AddField("username", UsernameInput.GetComponent<InputField>().text);
+		httpForm.AddField("pin", int.Parse(PINInput.GetComponent<InputField>().text));
 
 		using (var httpRequest = UnityWebRequest.Post(ScoreboardURL, httpForm))
 		{
@@ -155,10 +145,7 @@ public class AJAXScript : MonoBehaviour {
 		{
 			if (children.MoveNext())
 			{
-				Regex rx = new Regex(@"\\[uU]([0-9A-Fa-f]{4})");
-				string result = rx.Replace(pair.Key, match => ((char)Int32.Parse(match.Value.Substring(2), NumberStyles.HexNumber)).ToString());
-
-				((Transform)children.Current).gameObject.GetComponent<Text>().text = result;
+				((Transform)children.Current).gameObject.GetComponent<Text>().text = pair.Key;
 			}
 			if (children.MoveNext())
 			{
@@ -169,6 +156,8 @@ public class AJAXScript : MonoBehaviour {
 		{
 			((Transform)children.Current).gameObject.GetComponent<Text>().text = "";
 		}
+		SubmitPanel.SetActive(false);
+		HighscoresPanel.SetActive(true);
 	}
 
 	private Dictionary<string, int> JSONParser(string text)
@@ -204,37 +193,5 @@ public class AJAXScript : MonoBehaviour {
 		SubmitPanel.SetActive(true);
 		HighscoresPanel.SetActive(false);
 		gameObject.SetActive(false);
-	}
-
-	private void UpdateSubmitUI()
-	{
-		if (LoggedIn)
-		{
-			if (UsernamePanel.activeInHierarchy || PinPanel.activeInHierarchy || !ChangeUserButton.activeInHierarchy)
-			{
-				ChangeUserButton.SetActive(true);
-				UsernamePanel.SetActive(false);
-				PinPanel.SetActive(false);
-			}
-			SubmitText.text = LoggedinMessage;
-		}
-		else
-		{
-			if (!(UsernamePanel.activeInHierarchy && PinPanel.activeInHierarchy && !ChangeUserButton.activeInHierarchy))
-			{
-				ChangeUserButton.SetActive(false);
-				UsernamePanel.SetActive(true);
-				PinPanel.SetActive(true);
-			}
-			SubmitText.text = LoginMessage;
-		}
-	}
-
-	public void OnChangeUser()
-	{
-		LoggedIn = false;
-		username = "";
-		pin = 0;
-		UpdateSubmitUI();
 	}
 }
